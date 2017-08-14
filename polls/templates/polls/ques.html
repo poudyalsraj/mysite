@@ -1,0 +1,31 @@
+ <table align="center">
+  <tr>
+<th>
+<h2>{{object.name}}</h2>
+</th>
+
+</tr>
+  <tr>
+    <td>{% for q in category.question_set.all %}
+
+  <li>
+
+        <a href ='{% url 'polls:ques-choice' object.id q.id %}'> {{q.question_text }} </a>
+        
+        
+        
+    </li> 
+
+ <br> 
+{% endfor %}
+
+</td>
+   
+  </tr>
+</table> 
+
+
+
+
+
+
