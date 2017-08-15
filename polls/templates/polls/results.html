@@ -1,9 +1,9 @@
-
-{% for choice in choices %}
-
+{{ page }}
+{% for ch in page.choice_set.all %}
+ 
   <li>
 
-        {{choice.choice_text}}={{choice.votes }} 
+        {{ch.choice_text}}={{ch.votes }} 
         
         
     </li> 

@@ -6,10 +6,10 @@ urlpatterns = [
 
     url(r'^$', views.CategoryListView.as_view(), name='home'),
     url(r'^(?P<pk>\d+)/$', views.QuestionsView.as_view(), name='ques'),
-    url(r'^(?P<c_id>\d+)/(?P<pk>\d+)$', views.QuestionsDetailView.as_view(), name='ques-choice'),
-    # url(r'^\d/(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
 
-    url(r'^(?P<question_id>[0-9]+)/results/$', views.ResultView.as_view(), name='result'),
+    url(r'^(?P<c_id>\d+)/(?P<pk>\d+)$', views.QuestionsDetailView.as_view(), name='ques-choice'),
+
+    url(r'^(?P<pk>\d+)/results/$', views.ResultView.as_view(), name='result'),
 
 
     # url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),

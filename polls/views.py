@@ -1,8 +1,8 @@
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 # from django.template import loader
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView, TemplateView, UpdateView
 from .models import Category, Question, Choice
 from django.urls import reverse
 
@@ -40,25 +40,115 @@ class QuestionsDetailView(DetailView):
         return context
 
 
-class ResultView(TemplateView):
+class ResultView(DetailView):
+
     template_name = 'polls/results.html'
     model = Choice
 
-    def post(self, request, question_id):
-        question = get_object_or_404(Question, pk=question_id)
+    def get_context_data(self, **kwargs):
+        context = super(ResultView, self).get_context_data(**kwargs)
+        ques_id = self.kwargs['pk']
+        question = get_object_or_404(Question, id=ques_id)
 
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-        selected_choice.votes += 1
-        selected_choice.save()
-        context = {
+        try:
+            selected_choice = question.choice_set.get(pk=self.request.GET.get('choice'))
+            context['page'] = Question.objects.get(id=ques_id)
+            selected_choice.votes += 1
+            selected_choice.save()
+            return context
+        except Exception:
+                context['message'] = "no choice selected "
+                return context
 
-            'choices': Choice.objects.all(),
-
-        }
-        return super(TemplateView, self).render_to_response(context)
 
 
-    # def get_context_data(self, **kwargs):
+
+
+# def get_context_data(self, **kwargs):
+#             context = super(ResultDisplayView, self).get_context_data(**kwargs)
+#             ques_id = self.kwargs['pk']
+#             question = get_object_or_404(Question, id=ques_id)
+#             try:
+#                 selected_choice = question.choice_set.get(id=self.request.GET['choice'])
+
+#                 context['page']=Question.objects.get(id =ques_id)
+#                 selected_choice.votes += 1
+#                 selected_choice.save()
+#                 return context
+#             except Exception :
+#                 context['message'] = "no choice selected "
+#                 return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class ResultDisplayView(DetailView):
+
+
+#     template_name = 'poll/display_result.html'
+#     model = Choice
+
+#     def get_context_data(self, **kwargs):
+
+#         context = super(ResultDisplayView, self).get_context_data(**kwargs)
+#         ques_id = self.kwargs['pk']
+#         print(ques_id)
+
+#         context['page']=Question.objects.get(id =ques_id)
+#         page =  Question.objects.get(id =ques_id)
+#         n =page.choice_set.all()
+#         for u in n:
+#             u.votes = u.votes +1
+#             u.save()
+
+
+
+
+
+
+
+
+
+
+
+
+    # def post(self,request, question_id):
+    #     question = get_object_or_404(Question, pk=question_id)
+
+    #     selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    #     selected_choice.votes += 1
+    #     selected_choice.save()
+    #     return HttpResponse('result')
+    #     return super(Api, self).dispatch(request, *args, **kwargs)
+
+    # # def get_context_data(self, **kwargs):
 
     #     context = super(ResultView, self).get_context_data(**kwargs)
     #     context['choices'] = Choice.objects.all()
