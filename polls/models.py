@@ -15,13 +15,15 @@ class Question(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now())
 
     def __str__(self):
         return self.question_text
 
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+        yesterday = now - datetime.timedelta(days=1)
+        return now >= self.pub_date >= yesterday
 
 
 class Choice(models.Model):

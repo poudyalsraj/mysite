@@ -1,0 +1,13 @@
+
+<form method="POST" action=''>
+{% for field in form %}
+{% csrf_token %}
+{{ field.label_tag }}
+{{ field }}
+{% endfor %}
+
+<button type = "submit">Save</button>
+<a href = "{ url 'polls:add-choice' ques }"><button type = "submit">Save and Continue</button></a>
+
+</form>
+object: {{object.id }}

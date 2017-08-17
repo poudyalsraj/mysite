@@ -1,3 +1,5 @@
+<a href = "{% url 'polls:add-ques' object.id %}"><button>Add Questions</button></a>
+
  <table align="center">
   <tr>
 <th>
@@ -11,6 +13,8 @@
   <li>
 
         <a href ='{% url 'polls:ques-choice' object.id q.id %}'> {{q.question_text }} </a>
+        <a href = "{% url 'polls:ques-del' q.id %}"><button>Update</button></a>
+        <a href = "{% url 'polls:ques-del' q.id %}"><button>Delete</button></a>
         
         
         
